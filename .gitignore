@@ -51,3 +51,7 @@ jspm_packages/
 .env.test.local
 .env.production.local
 .env.local
+
+# OS generated files #
+.DS_Store
+.DS_Store?
