@@ -12,6 +12,10 @@ const ProductModel = mongoose.model('Product', {
     peso: {
         type: Number,
         required: true
+    },
+    estoque:{
+        type: Number,
+        required: true
     }
 })
 

@@ -1,3 +1,6 @@
+const { validateCreate } = require('../middlewares/middlewares');
+const bcrypt = require('bcrypt');
+
 module.exports = (app, repository) => {
 
     app.get('/users', async (req, res) => {
@@ -28,8 +31,10 @@ module.exports = (app, repository) => {
         return res.status(200).json('Autenticado')
     })
 
-    app.post('/users', async (req, res) => {
-        const user = await repository.postCreateUser(req.body);
+    app.post('/users', validateCreate, async (req, res) => {
+        const salt = await bcrypt.genSalt(12);
+        const passwordHash = await bcrypt.hash(req.body.password, salt)
+        const user = await repository.postCreateUser({email: req.body.email, password: passwordHash, admin: req.body.admin });
         return res.status(200).json(user);
     });
 

@@ -14,6 +14,4 @@ const UserModel = mongoose.model('User', {
     }
 })
 
-
-
 module.exports = UserModel
