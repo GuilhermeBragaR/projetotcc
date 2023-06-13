@@ -65,19 +65,33 @@ async function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(" ")[1];
   const secret = process.env.SECRET;
   if (!token) {
-    return res.status(401).json({ msg: "Acesso negado" });
+    return res.status(401).json({ msg: 'Acesso negado' });
   }
 
   try {
     const payload = jwt.verify(token, secret);
     if(!payload){
-      return res.status(401).json({msg: 'INVALIDO'})
+      return res.status(401).json({msg: 'INVALIDO'});
     }
   } catch (error) {
-    return res.status(401).json({msg: 'invalid token'})
+    return res.status(401).json({msg: 'invalid token'});
   }
   
   jwt.verify(token, secret);
+  next();
+}
+
+async function validateAdmin(req, res, next) {
+  const { email } = req.body;
+  const user = await findUser({ email: email});
+  console.log(user);
+
+  if(user.admin == true){
+    return res.status(200).json({msg: 'Admin'});
+  }else{
+    return res.status(200).json({msg: 'Usuario'});
+  }
+  
   next();
 }
 
@@ -86,4 +100,5 @@ module.exports = {
   authenticateUser,
   authenticateToken,
   createToken,
+  validateAdmin
 };

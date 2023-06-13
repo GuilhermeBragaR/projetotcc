@@ -10,7 +10,7 @@ const UserModel = mongoose.model('User', {
         required: true,
     },
     admin: {
-        type: Number
+        type: Boolean
     }
 })
 

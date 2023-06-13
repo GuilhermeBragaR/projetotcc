@@ -1,8 +1,7 @@
 const {
   validateCreate,
   authenticateUser,
-  authenticateToken,
-  createToken,
+  validateAdmin,
 } = require("../middlewares/middlewares");
 const bcrypt = require("bcrypt");
 
@@ -14,7 +13,7 @@ module.exports = (app, repository) => {
     res.json(users);
   });
 
-  app.get("/users/:id", authenticateToken, async (req, res) => {
+  app.get("/users/:id", async (req, res) => {
     const userId = req.params.id;
     const user = await repository.getUsersId(userId);
     if (!user) return res.sendStatus(404);
@@ -25,12 +24,12 @@ module.exports = (app, repository) => {
   app.post(
     "/users/authenticate",
     authenticateUser,
-    createToken,
+    validateAdmin,
     async (req, res) => {
       const { email } = req.body;
-      const token = res.token;
+      //const token = res.token;
       const user = await repository.postValidateLogin(email);
-      return res.status(200).json({ msg: "autorizado", token });
+      return res.status(200).json({ msg: "autorizado" });
     }
   );
 
