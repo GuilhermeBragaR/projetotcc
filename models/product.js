@@ -16,6 +16,10 @@ const ProductModel = mongoose.model('Product', {
     estoque:{
         type: Number,
         required: true
+    }, 
+    preco: {
+        type: Number,
+        required: true
     }
 })
 

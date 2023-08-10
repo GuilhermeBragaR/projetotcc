@@ -3,7 +3,7 @@ const cors = require('cors');
 
 const corsOptions = {
     origin: '*',
-    optionsSucessSatatus: 200
+    optionsSucessStatus: 200,
 }
 
 async function start(api, repository) {

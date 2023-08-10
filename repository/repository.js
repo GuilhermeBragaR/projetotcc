@@ -1,6 +1,7 @@
 const database = require('../database/connect');
-const UserModel = require('../models/usermodel');
-const ProductModel = require('../models/productmodel');
+const UserModel = require('../models/user');
+const ProductModel = require('../models/product');
+const PurchaseModel = require('../models/purchase')
 
 async function getUsers() {
   const db = await database.connectDatabase();
@@ -32,6 +33,7 @@ async function deleteUser(id) {
   return UserModel.findByIdAndRemove(id);
 }
 
+//produtos
 async function getProduct() {
   const db = await database.connectDatabase();
   return ProductModel.find();
@@ -57,6 +59,13 @@ async function deleteProduct(id) {
   return ProductModel.findByIdAndRemove(id);
 }
 
+//vendas
+async function purchaseItens(itens) {
+  const db = await database.connectDatabase();
+  return PurchaseModel.create(itens);
+}
+
+
 module.exports = {
   getUsers,
   getUsersId,
@@ -69,4 +78,5 @@ module.exports = {
   postCreateProduct,
   patchUpdateProduto,
   deleteProduct,
+  purchaseItens
 };
